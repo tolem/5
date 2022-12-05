@@ -63,3 +63,5 @@ def register(request):
     else:
         return render(request, "capstone/register.html")
 
+
+# capstone
