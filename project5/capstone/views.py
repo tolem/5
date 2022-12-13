@@ -5,7 +5,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .models import User
-import json
+from newsapi.newsapi_client import NewsApiClient
+import environ
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+from django.http import JsonResponse
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+NEWS_API_KEY = env("NEWS_API_KEY")
+api = NewsApiClient(api_key=NEWS_API_KEY)
 
 
 def index(request):
@@ -65,3 +76,25 @@ def register(request):
 
 
 # capstone
+def get_everything(request, query):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    headlines = api.get_everything(q=query)
+    return JsonResponse(headlines)
+    
+    # sources = api.get_sources()
+    # print(api.get_everything(q='anime'))
+    # print(sources)
+
+
+def get_headlines():
+    pass
+
+
+def get_by_sources():
+    pass
+    # headlines = api.get_top_headlines()
+    # # sources = api.get_sources()
+    # print(api.get_everything(q='anime'))
+    # # print(sources)
