@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .models import User
+import json
+from django.views.decorators.csrf import csrf_exempt
 from newsapi.newsapi_client import NewsApiClient
 import environ
 from django.urls import reverse
@@ -76,16 +78,17 @@ def register(request):
 
 
 # capstone
-def get_everything(request, query):
+# @csrf_exempt
+def search_news(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
+    data = json.loads(request.body)
+    content = data.get("search", "")
+    print(content.get('query', ''))
+    headlines = api.get_everything(q=content.get('query',''))
+    print('response recieved, Lami')
+    return JsonResponse(headlines, status=201)
 
-    headlines = api.get_everything(q=query)
-    return JsonResponse(headlines)
-    
-    # sources = api.get_sources()
-    # print(api.get_everything(q='anime'))
-    # print(sources)
 
 
 def get_headlines():

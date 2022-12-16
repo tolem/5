@@ -8,5 +8,5 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
-    path('everything/<str:query>', views.get_everything, name='everything'),
+    path('news/search', views.search_news, name='search'),
 ]

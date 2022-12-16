@@ -9,10 +9,13 @@
   <div class="row">
     <div class="col-md-12">
       <div  class="d-flex justify-content-end p-4 backgroundColor">
-      <form action="#" class="form-inline my-4 w-100 justify-content-end fullWidthForm position-relative mr-4">
+      <form action="" method="POST" class="form-inline my-4 w-100 justify-content-end fullWidthForm position-relative mr-4 searchForm">
+        {% csrf_token %}
         <input type="text" class="form-control text-box rounded-pill" placeholder="Start Here" required>
+        <input type="text" class="form-control text-box rounded-pill" placeholder="Start Here" required>
+
         <div class="buttonContainer">
-          <button class="btn" type="submit"><i class="bi bi-check-circle-fill"></i></button>
+          <button class="btn" type="submit"><i class="bi bi-check-circle-fill submitBtn"></i></button>
           <button class="btn" type="reset"><i class="bi bi-x-circle-fill"></i></button>
         </div>
         <span class="line"></span>   
@@ -20,11 +23,18 @@
       </div>
     </div>
   </div>
+  <div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">First and last name</span>
+  </div>
+  <input type="text" aria-label="First name" class="form-control searchQuery">
+  <input type="text" aria-label="Last name" class="form-control searchLocation">
+</div>
 </div>
 
 <h2> Results </h2>
-<div id="display-results">
-    None start searching for news! 
+<div id="result-display">
+    <!-- None start searching for news!  -->
 </div>
 
 {% endblock %}
