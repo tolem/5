@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import User
 import json
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt,  ensure_csrf_cookie
 from newsapi.newsapi_client import NewsApiClient
 import environ
 from django.urls import reverse
@@ -79,6 +79,7 @@ def register(request):
 
 # capstone
 # @csrf_exempt
+@ensure_csrf_cookie
 def search_news(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)

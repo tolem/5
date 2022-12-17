@@ -10,7 +10,7 @@
     <div class="col-md-12">
       <div  class="d-flex justify-content-end p-4 backgroundColor">
       <form action="" method="POST" class="form-inline my-4 w-100 justify-content-end fullWidthForm position-relative mr-4 searchForm">
-        {% csrf_token %}
+        <!-- {% csrf_token %} -->
         <input type="text" class="form-control text-box rounded-pill" placeholder="Start Here" required>
         <input type="text" class="form-control text-box rounded-pill" placeholder="Start Here" required>
 
@@ -33,9 +33,7 @@
 </div>
 
 <h2> Results </h2>
-<div id="result-display">
-    <!-- None start searching for news!  -->
-</div>
+<div id="result-display"></div>
 
 {% endblock %}
 
