@@ -13,6 +13,9 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import JsonResponse
+from itertools import chain
+from django.views.generic import ListView
+from django.core.paginator import Paginator
 
 env = environ.Env()
 # reading .env file
@@ -78,17 +81,53 @@ def register(request):
 
 
 # capstone
-# @csrf_exempt
 @ensure_csrf_cookie
 def search_news(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
     data = json.loads(request.body)
     content = data.get("search", "")
-    print(content.get('query', ''))
+    # print(content.get('query', ''))
     headlines = api.get_everything(q=content.get('query',''))
     print('response recieved, Lami')
     return JsonResponse(headlines, status=201)
+
+
+# @csrf_exempt
+def paginate_news(request, endpoint):
+    if request.method != "PUT":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    data = json.loads(request.body)
+    content = data.get("articles")
+    # print(content.get('query', ''))
+    # headlines = api.get_everything(q=content.get('query',''))
+
+    print(content, "test")
+    if content is not None:
+        if type(content) == str:
+            headlines = api.get_everything(q=content)
+            paginator = Paginator(headlines["articles"], 10)
+        else:
+            paginator = Paginator(content['articles'], 10)
+
+        counter = int(request.GET.get("page") or 1)
+
+    else:
+        return JsonResponse({'error': 'server did not return an response'}, status=404)
+
+    if endpoint == "posts":
+        page = paginator.page(counter)
+        set_posts = page.object_list
+        print(type(set_posts))
+        return JsonResponse(set_posts, safe=False)
+
+    elif endpoint == "pages":
+        print(paginator.num_pages)
+        return JsonResponse({"pages": paginator.num_pages})
+
+    else:
+        return HttpResponse(status=404)
+
 
 
 

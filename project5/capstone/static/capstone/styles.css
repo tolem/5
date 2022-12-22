@@ -20,3 +20,57 @@
 footer{
   text-align: center;
 }
+
+
+
+
+
+/*body {
+/*  background-color: lightblue;*/
+/*  margin: 50px auto;
+}*/
+/**/
+
+form{
+  margin: 50px auto;
+}
+.search {
+  max-width: 600px;
+  margin: auto;
+}
+
+.adv-search {
+  width: 100%;
+}
+
+/* CSS for animated dropdown effect... PRETTY!*/
+
+@media (min-width: 768px) {
+  .animate {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(6rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(3rem);
+    opacity: 1;
+  }
+  0% {
+    transform: translateY(6rem);
+    opacity: 0;
+  }
+}
+
+.slideIn {
+  animation-name: slideIn;
+}
+
+.bi-x-circle-fill, .bi-search{
+  color: white;
+}

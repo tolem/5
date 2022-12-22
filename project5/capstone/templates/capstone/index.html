@@ -2,38 +2,100 @@
 {% load static %}
 
 {% block body %}
-    <h1>Hi {% if user.pk %} {{ user.username }} {% else %} There {% endif %} </h1>
+    <h1>Hi {% if user.pk %} {{ user.username }} {% else %} Newbie {% endif %} </h1>
 
-    <p class="para"> Find news that match your interest!</p>
+   
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div  class="d-flex justify-content-end p-4 backgroundColor">
-      <form action="" method="POST" class="form-inline my-4 w-100 justify-content-end fullWidthForm position-relative mr-4 searchForm">
-        <!-- {% csrf_token %} -->
-        <input type="text" class="form-control text-box rounded-pill" placeholder="Start Here" required>
-        <input type="text" class="form-control text-box rounded-pill" placeholder="Start Here" required>
 
-        <div class="buttonContainer">
-          <button class="btn" type="submit"><i class="bi bi-check-circle-fill submitBtn"></i></button>
-          <button class="btn" type="reset"><i class="bi bi-x-circle-fill"></i></button>
+<div class="container text-center">
+  <h3 class="pb-5">Search worldwide news that match your interest! </h3>
+
+</div>
+
+<form method="POST"  action=""  class="input-group input-group-lg search searchForm">
+    {% csrf_token %}
+  <input type="search" class="form-control searchQuery" aria-label="Text input with segmented dropdown button">
+
+  <button type="submit" class="btn bg-dark submitBtn"><i class="bi bi-search "></i></button>
+  <button class="btn btn-danger" type="reset"><i class="bi bi-x-circle-fill"></i></button>
+
+  <button type="button" class="btn btn-info dropdown-toggle" type="button" data-toggle="collapse" data-target="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions">
+    <span class="">Advanced</span>
+  </button>
+</form>
+
+
+<!-- <form class="form-inline my-2 my-lg-0">
+  <input type="search" class="form-control mr-sm-2” type=”search" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  <button class="btn btn-outline-primary my-2 my-sm-0" type="button" data-toggle="collapse" data-target="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions">Advanced Options</button>
+</form> -->
+
+
+<div class="collapse adv-search" id="advancedOptions">
+  <!-- advanced options content goes here  -->
+  <div class="px-3 pb-2">
+        <div class="row">
+        <div class="col-md mb-3">
+          <h6> Source </h6>
+          <input type="text" class="form-control searchLocation" placeholder="Enter a source like BBC News CNN Forbes">
         </div>
-        <span class="line"></span>   
-      </form>
       </div>
-    </div>
-  </div>
-  <div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">First and last name</span>
-  </div>
-  <input type="text" aria-label="First name" class="form-control searchQuery">
-  <input type="text" aria-label="Last name" class="form-control searchLocation">
-</div>
+
+      <div class="row">
+        <div class="col-md mb-3">
+          <h6> Selection </h6>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+        <div class="col-md mb-3">
+          <h6>Artist / maker</h6>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+      </div>
+      <div class="row">
+            <div class="col-md mb-3">
+            <h6><label for="inputState">Category</label> </h6>
+            <select id="inputState" class="custom-select">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+        </div>
+
+       </div>
+       <div class="row">
+        <div class="col-md-6 mb-3">
+          <h6>Associated person</h6>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+      </div>
+   
+     <div class="d-grid">
+        <button type="button" class="btn btn-primary">Search</button>
+      </div>
+ </div>
 </div>
 
-<h2> Results </h2>
+</div>
+
+
+
+<h2 id= "result-count"> Results </h2>
 <div id="result-display"></div>
+
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center" id="page-number">
+    <li class="page-item" >
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
+    </li>
+    <li class="page-item"> 
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
 
 {% endblock %}
 
