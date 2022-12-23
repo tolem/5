@@ -20,60 +20,119 @@
   <button class="btn btn-danger" type="reset"><i class="bi bi-x-circle-fill"></i></button>
 
   <button type="button" class="btn btn-info dropdown-toggle" type="button" data-toggle="collapse" data-target="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions">
-    <span class="">Advanced</span>
+    <span class="">Advanced Options</span>
   </button>
 </form>
-
-
-<!-- <form class="form-inline my-2 my-lg-0">
-  <input type="search" class="form-control mr-sm-2” type=”search" placeholder="Search" aria-label="Search">
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  <button class="btn btn-outline-primary my-2 my-sm-0" type="button" data-toggle="collapse" data-target="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions">Advanced Options</button>
-</form> -->
 
 
 <div class="collapse adv-search" id="advancedOptions">
   <!-- advanced options content goes here  -->
   <div class="px-3 pb-2">
         <div class="row">
-        <div class="col-md mb-3">
+        <div class="col-md mb-3 searchLocation">
           <h6> Source </h6>
-          <input type="text" class="form-control searchLocation" placeholder="Enter a source like BBC News CNN Forbes">
+          <input type="text" class="form-control news-source" placeholder="Enter a source like BBC News CNN Forbes">
         </div>
       </div>
 
       <div class="row">
         <div class="col-md mb-3">
-          <h6> Selection </h6>
-          <input type="text" class="form-control" placeholder="">
-        </div>
-        <div class="col-md mb-3">
-          <h6>Artist / maker</h6>
-          <input type="text" class="form-control" placeholder="">
+        
+            <label for="newsType">  <h6> Filter news by type</h6></label>
+            <select class="form-control" id="newsType">
+              <option value="Everything">Everything</option>
+              <option value="Headlines"> HeadLines </option>
+            </select>
+          
         </div>
       </div>
       <div class="row">
             <div class="col-md mb-3">
-            <h6><label for="inputState">Category</label> </h6>
-            <select id="inputState" class="custom-select">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <h6><label for="inputCategory">Category</label> </h6>
+            <select id="inputCategory" class="custom-select">
+              <option value="general"> general</option>
+              <option value="business">business</option>
+              <option value="entertainment">entertainment</option>
+              <option value="health">health</option>
+              <option value="science">science</option>
+              <option value="sports">sports</option>
+              <option value="technology">technology</option>
             </select>
         </div>
 
        </div>
        <div class="row">
-        <div class="col-md-6 mb-3">
-          <h6>Associated person</h6>
-          <input type="text" class="form-control" placeholder="">
+        <div class="col-md mb-3">
+               <h6><label for="inputState">Search by Country</label> </h6>
+                <select id="inputState" class="custom-select">
+                      <option value="us"> USA</option>
+                      <option value="sg">Singapore</option>
+                      <option value="ng">Nigeria</option>
+                      <option value="ch">Switzerland</option>
+                      <option value="ar">Argentina</option>
+                      <option value="gr">Greece</option>
+                      <option value="nl">Netherland</option>
+                      <option value="za">South Africa</option>
+                     <option value="au">Australia</option>
+                    <option value="hk">Hong Kong</option>
+                    <option value="nz">Netherland</option>
+                    <option value="kr">South Korea</option>
+                    <option value="at">Austria</option>
+                    <option value="hu">Hungary</option>
+                     <option value="se">Sweden</option>
+                    <option value="be">Belguim</option>
+                    <option value="in">India</option>
+                    <option value="no">Norway</option>
+                    <option value="br">Brazil</option>
+                    <option value="id">Indonesia</option>
+                    <option value="ph">Philippines</option>
+                    <option value="tw">Taiwan</option>
+                    <option value="bg">Bulgaria</option>
+                    <option value="ie">Ireland</option>
+                    <option value="pl">Poland</option>
+                    <option value="th">Thailand</option>
+                    <option value="ca">Canada</option>
+                    <option value="il">Isreal</option>
+                    <option value="pt">Portugal</option>
+                    <option value="tr">Turkey</option>
+                    <option value="cn">China</option>
+                    <option value="it">Italy</option>
+                    <option value="ro">Romania</option>
+                    <option value="ae">UAE</option>
+                    <option value="co">Colombia</option>
+                    <option value="jp">Japan</option>
+                    <option value="ru">Russia</option>
+                    <option value="ua">Ukraine</option>
+                    <option value="cu">Cuba</option>
+                    <option value="lv">Latvia</option>
+                    <option value="sa">Saudi Arabia</option>
+                    <option value="gb">United Kingdom</option>
+                    <option value="cz">Czech Republic</option>
+                    <option value="lt">Lithuania</option>
+                    <option value="rs">Serbia</option>
+                    <option value="eg">Egypt</option>
+                    <option value="my">Malaysia</option>
+                    <option value="ve">Venuzuela</option>
+                    <option value="fr">France</option>
+                    <option value="mx">Mexico</option>
+                    <option value="sk">Slovakia</option>
+                    <option value="de">Germany</option>
+                    <option value="ma">Morocco</option>
+                    <option value="si">Slovenia</option>
+                </select>
+            </div>
+         
         </div>
       </div>
    
-     <div class="d-grid">
-        <button type="button" class="btn btn-primary">Search</button>
+     <div class="grid">
+        <button type="button" class="btn-lg btn-block btn-primary advanced-search">Search </button>
       </div>
+      <br/>
+      <div class="grid">
+        <a class="btn btn-danger btn-block btn-lg" data-toggle="collapse" href="#advancedOptions" role="button" aria-expanded="false" aria-controls="advancedOptions">Close Advanced Options</a>          
+      </div>
+
  </div>
 </div>
 
@@ -102,3 +161,14 @@
 {% block script %}
     <script src="{% static 'capstone/index.js' %}"> </script>
 {% endblock %}
+
+<!--         <div class="col-md mb-3">
+          <h6>Artist / maker</h6>
+          <input type="text" class="form-control" placeholder="">
+        </div> -->
+
+        <!-- <form class="form-inline my-2 my-lg-0">
+  <input type="search" class="form-control mr-sm-2” type=”search" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  <button class="btn btn-outline-primary my-2 my-sm-0" type="button" data-toggle="collapse" data-target="#advancedOptions" aria-expanded="false" aria-controls="advancedOptions">Advanced Options</button>
+</form> -->

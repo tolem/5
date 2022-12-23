@@ -9,20 +9,37 @@ document.addEventListener('DOMContentLoaded', function() {
 	let previous = document.getElementsByClassName('page-item');
     let next = document.getElementsByClassName('page-item');
     let searchCount = document.querySelector('#result-count');
+    let advancedSearch = document.querySelector('.advanced-search');
+    const selectCountry = document.querySelector('#inputState');
+    const selectCategory = document.querySelector('#inputCategory');
+    const selectNewsType = document.querySelector('#newsType');
+    const selectNewsSource = document.querySelector('.news-source');
+
 	const csrftoken = getCookie('csrftoken'); // csrf token from page
 	console.log(csrftoken, searchQuery, submitQuery, searchQuery.value.trim().length );
 
 	submitQuery.disabled = true;
-	searchQuery.onchange = () => {
+	advancedSearch.disabled = true;
 
+	searchQuery.onchange = () => {
+		// by default submit button are disabled unless user enters a string
 		if (searchQuery.value.trim().length > 0){
 			submitQuery.disabled = false;
+			advancedSearch.disabled = false;
 		}
 		else{
 			submitQuery.disabled = true;
+			advancedSearch.disabled = true;
 			
 		}
 	};
+
+
+	advancedSearch.onclick = () => {
+		console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value);
+		// invokes the search form 
+		searchForm.requestSubmit();
+	}
 
 	next[1].style.display = 'none';
     previous[0].style.display = 'none';

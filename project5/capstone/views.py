@@ -28,6 +28,10 @@ def index(request):
     return render(request, "capstone/index.html")
 
 
+def bookmark(request):
+    return render(request, "capstone/bookmark.html")
+
+
 def login_view(request):
     if request.method == "POST":
 
