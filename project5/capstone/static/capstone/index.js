@@ -1,5 +1,6 @@
 console.log('Hello World!');
 document.addEventListener('DOMContentLoaded', function() {
+	// DOM elements instance
 	let searchBox = document.querySelector('.text-box');
 	let searchQuery = document.querySelector('.searchQuery');
 	let searchLocation = document.querySelector('.searchLocation');
@@ -14,9 +15,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectCategory = document.querySelector('#inputCategory');
     const selectNewsType = document.querySelector('#newsType');
     const selectNewsSource = document.querySelector('.news-source');
+    const selectNewsLang = document.querySelector('#newsLang');
+
 
 	const csrftoken = getCookie('csrftoken'); // csrf token from page
 	console.log(csrftoken, searchQuery, submitQuery, searchQuery.value.trim().length );
+
+
+	// advanced options feature are empty by default
+	selectCountry.value = '';
+	selectCategory.value = '';
+	selectNewsType.value = '';
+	selectNewsSource.value = '';
+	selectNewsLang.value = '';
+
+
+	console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value, "test0");
 
 	submitQuery.disabled = true;
 	advancedSearch.disabled = true;
@@ -36,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 	advancedSearch.onclick = () => {
-		console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value);
+		console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value, "test0");
 		// invokes the search form 
 		searchForm.requestSubmit();
 	}
@@ -67,7 +81,7 @@ function findNews(event){
 	// console.log(searchLocation.value, searchQuery.value);
 	// findNews(searchQuery.value, searchLocation.value);
 
-	content =  {'query': searchQuery.value, 'location': searchLocation.value }
+	content =  {'query': searchQuery.value, 'country': selectCountry.value, 'category': selectCategory.value, 'lang': selectNewsLang.value,  'newsType': selectNewsType.value, 'newsSource': selectNewsSource.value};
 
 	fetch(`news/search`, {
 	    method: 'POST',
