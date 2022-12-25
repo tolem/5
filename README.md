@@ -5,7 +5,9 @@ This web application meets the requirement as it is utilize Django on the back-e
 The web app is distintive as it supports user registration and storing of data. Also the project is distinctive from the prior projects completed in the course as it is a news web application that allows site visitors the ability to query for news topic and find headlines that matches their interest. The web app is powered by [News API](https://newsapi.org/) it is REST API that enables users to find  breaking news headlines from news sources and blogs across the web. 
 
 ### file structure
-1 templats
+* root
+* static
+* templates
 
 
 
