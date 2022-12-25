@@ -21,6 +21,7 @@ env = environ.Env()
 # reading .env file
 environ.Env.read_env()
 NEWS_API_KEY = env("NEWS_API_KEY")
+# Init
 api = NewsApiClient(api_key=NEWS_API_KEY)
 
 
@@ -91,13 +92,38 @@ def search_news(request):
         return JsonResponse({"error": "POST request required."}, status=400)
     data = json.loads(request.body)
     content = data.get("search", "")
-    # print(content.get('query', ''))
-    headlines = api.get_everything(q=content.get('query',''))
-    print('response recieved, Lami')
-    return JsonResponse(headlines, status=201)
+    advance_content = [query for query in content.values()]
+    adv_selection =  all(advance_content)
+    # this check if user chose advance option 
+    if adv_selection:
+        news_topic = advance_content[0]
+        news_country = advance_content[1]
+        news_category = advance_content[2]
+        news_language = advance_content[3]
+        news_type = advance_content[4]
+        news_source = advance_content[5]
+        print(all(advance_content))
+        print(advance_content, len(advance_content), 'check')
+
+        # use user selection to get news type 
+        if news_type == "Headlines":
+            print("Headlines")
+            headlines = api.get_top_headlines(sources=news_source, q=news_topic, category=news_category,country=news_country)
+            return JsonResponse(headlines, status=201)
+
+        if news_type == "Everything":
+            print("Everything")
+            all_articles = api.get_everything(q=news_topic,sources=news_source, language=news_language,  )
+            return JsonResponse(all_articles, status=201)
 
 
-# @csrf_exempt
+    else:
+        all_articles = api.get_everything(q=content.get('query',''))
+        print('response recieved, Lami')
+        return JsonResponse(all_articles, status=201)
+
+
+
 def paginate_news(request, endpoint):
     if request.method != "PUT":
         return JsonResponse({"error": "POST request required."}, status=400)
@@ -145,3 +171,15 @@ def get_by_sources():
     # # sources = api.get_sources()
     # print(api.get_everything(q='anime'))
     # # print(sources)
+
+def user_view(request):
+    pass
+
+
+def save_articles(request):
+    pass
+
+
+def update_articles(request):
+    pass
+

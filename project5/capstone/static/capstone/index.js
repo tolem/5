@@ -29,25 +29,48 @@ document.addEventListener('DOMContentLoaded', function() {
 	selectNewsSource.value = '';
 	selectNewsLang.value = '';
 
+	let advancedButtons = [selectCountry, selectCategory, selectNewsType, selectNewsSource];
 
-	console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value, "test0");
+
+	console.log(advancedButtons, "test0");
 
 	submitQuery.disabled = true;
 	advancedSearch.disabled = true;
+	let checker =  arr => arr.every(v => v === true);
+	let check = [];
 
-	searchQuery.onchange = () => {
+
+
+	searchQuery.addEventListener('input', () => {
 		// by default submit button are disabled unless user enters a string
 		if (searchQuery.value.trim().length > 0){
-			submitQuery.disabled = false;
-			advancedSearch.disabled = false;
+			submitQuery.disabled = false; 
+			advancedSearch.disabled = !checker(check);
+			console.log(check);
+			
 		}
 		else{
 			submitQuery.disabled = true;
-			advancedSearch.disabled = true;
 			
 		}
-	};
+	});
 
+
+
+		for (let inputs in advancedButtons){
+
+			advancedButtons[inputs].addEventListener( 'input', () => {
+					console.log(inputs);
+				if (advancedButtons[inputs].value.trim().length > 0){
+					check[inputs] = true;
+				}
+				else{
+					check[inputs] = false;
+				}
+			});
+				}
+
+			
 
 	advancedSearch.onclick = () => {
 		console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value, "test0");
