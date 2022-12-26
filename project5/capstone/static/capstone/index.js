@@ -16,11 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectNewsType = document.querySelector('#newsType');
     const selectNewsSource = document.querySelector('.news-source');
     const selectNewsLang = document.querySelector('#newsLang');
-
+    const orderNews = document.querySelector("#orderNews");
+    const startQueryDate = document.querySelector("#from");
+    const endQueryDate = document.querySelector("#to");
+    const searchDomain = document.querySelector('.search-domain');
+    const advancedOptions = document.querySelectorAll('.options');
+    const headLineElements = document.querySelectorAll('.headlines');
+    const everytingElements = document.querySelectorAll('.Everything');
 
 	const csrftoken = getCookie('csrftoken'); // csrf token from page
 	console.log(csrftoken, searchQuery, submitQuery, searchQuery.value.trim().length );
 
+
+	// visbibilty is hidden by default
+	advancedOptions.forEach(arr => arr.style.display = "none" );
 
 	// advanced options feature are empty by default
 	selectCountry.value = '';
@@ -28,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	selectNewsType.value = '';
 	selectNewsSource.value = '';
 	selectNewsLang.value = '';
+	orderNews.value = '';
+
 
 	let advancedButtons = [selectCountry, selectCategory, selectNewsType, selectNewsSource];
 
@@ -46,8 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (searchQuery.value.trim().length > 0){
 			submitQuery.disabled = false; 
 			advancedSearch.disabled = !checker(check);
-			console.log(check);
-			
+			console.log(check);			
 		}
 		else{
 			submitQuery.disabled = true;
@@ -56,11 +66,34 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 
+	// console.log(document.querySelectorAll('.Headlines'));
+
+	selectNewsType.addEventListener('input', () => {
+		let newsType = selectNewsType.value;
+		const playState = document.querySelectorAll(`.${selectNewsType.value}`);
+		console.log(playState, selectNewsType.value);
+
+		const changeState = (newsType === "Headlines") ? "Everything" : "Headlines";
+		const toggleState = document.querySelectorAll(`.${changeState}`);
+		// Here I change the state by toggling the form visibility
+		toggleState.forEach(arr => arr.style.display = "none");
+		playState.forEach( arr => arr.style.display = "block");
+
+		}
+		
+		);
+
+
+	// selectNewsType.addEventListener('input', () =.{
+	// 	changeState = document.querySelectorAll
+	// })
+
+
 
 		for (let inputs in advancedButtons){
 
 			advancedButtons[inputs].addEventListener( 'input', () => {
-					console.log(inputs);
+				console.log(inputs);
 				if (advancedButtons[inputs].value.trim().length > 0){
 					check[inputs] = true;
 				}
@@ -104,7 +137,7 @@ function findNews(event){
 	// console.log(searchLocation.value, searchQuery.value);
 	// findNews(searchQuery.value, searchLocation.value);
 
-	content =  {'query': searchQuery.value, 'country': selectCountry.value, 'category': selectCategory.value, 'lang': selectNewsLang.value,  'newsType': selectNewsType.value, 'newsSource': selectNewsSource.value};
+	content =  {'query': searchQuery.value, 'country': selectCountry.value, 'category': selectCategory.value, 'lang': selectNewsLang.value,  'newsType': selectNewsType.value, 'newsSource': selectNewsSource.value, 'startDate': startQueryDate.value, 'endDate': endQueryDate.value, 'domain': searchDomain.value, 'order': orderNews.value};
 
 	fetch(`news/search`, {
 	    method: 'POST',
@@ -202,7 +235,8 @@ function viewNews(counter, displayBox, query, tokens){
 	           	spanModal.innerHTML = "&times;";
 	           	modalBody.innerHTML = article.description;
 	           	modalFooterClose.innerHTML = "Close";
-	           	modalFooterBookmark.innerHTML = "Bookmark";
+	           	modalFooterBookmark.innerHTML = `<span><i class="bi bi-bookmark-check-fill"></i> Bookmark</span>`;
+
 
 
 	           	// setting modal attributes
@@ -217,7 +251,7 @@ function viewNews(counter, displayBox, query, tokens){
 	           	setAttr(modalBody, {"class": "modal-body"});
 	           	setAttr(modalFooter, {"class": "modal-footer"});
 	           	setAttr(modalFooterClose, {"type":"button", "class": "btn btn-secondary", "data-dismiss": "modal"});
-	           	setAttr(modalFooterBookmark, {"type": "button", "class": "btn btn-primary"});
+	           	setAttr(modalFooterBookmark, {"type": "button", "class": "btn btn-primary", "data-dismiss" :"modal"});
 
 
 	           	//  appending modal
@@ -225,14 +259,16 @@ function viewNews(counter, displayBox, query, tokens){
 	           	contentModalChild.appendChild(contentModalTitle);
 	           	contentModalChild.appendChild(closeModal);
 	           	modalFooter.appendChild(modalFooterClose);
-	           	// modalFooter.appendChild(modalFooterBookmark);
-	           	contentModalInner.appendChild(contentModalChild);
+	           	// gets current user to append button
+	           	getCurrentUser(modalFooter, modalFooterBookmark);
+		        contentModalInner.appendChild(contentModalChild);
 	           	contentModalInner.appendChild(modalBody);
 	           	contentModalInner.appendChild(modalFooter);
 	           	contentModalOutter.appendChild(contentModalInner);
 	           	contentModal.appendChild(contentModalOutter);
 	           	const imageUrl = article.urlToImage ? article.urlToImage : "https://robohash.org/23.238.193.4.png";
 	           	const newsAuthor = article.author ? article.author : "Unknown";
+
 
 
 	           	imageTag.setAttribute("src", imageUrl);
@@ -252,7 +288,18 @@ function viewNews(counter, displayBox, query, tokens){
 	           firstLinkTag.innerHTML = `Author: ${newsAuthor}<br/> Source: ${article.source['name']}</br> Published: ${formatDate}<br/>`;
 	           secondLinkTag.innerHTML = `<p class="card-text">link to website</p> <br/>`;
 
+
 	           headerTag.innerHTML = article.title;
+
+	           // when button is clicked save article to model
+	           modalFooterBookmark.onclick = () =>{
+	           	let content = {des: article.description, url: article.url, source: article.source['name'], date: article.publishedAt, img: imageUrl, author: newsAuthor, title: article.title};
+	           	console.log("this element has been clicked!");
+	           	// send articles to server
+	           	fetch("mark", {method:"PUT", headers: {'X-CSRFToken': tokens}, body: JSON.stringify({article: content})
+	           }).then(resp => resp.json()).then(result => console.log(result)).catch(err => console.log(err));
+
+	           }
 
 	           innerDiv.appendChild(headerTag);
 	           innerDiv.appendChild(contentTag);
@@ -375,4 +422,19 @@ function setAttr(el, attrs) {
 	for (let key in attrs){
 		el.setAttribute(key, attrs[key]);
 	}
+}
+
+
+function getCurrentUser(parentEle,childEle) {
+	// body...
+	fetch('http://localhost:8000/user/user', {method:'GET'}).then(resp => resp.json()).then(result => {
+		// console.log();
+		const currentUsername =  result['username'];
+	    console.log(currentUsername);
+	    if (currentUsername !== 404){
+	            	parentEle.appendChild(childEle);
+	           	}
+
+	})
+	return
 }

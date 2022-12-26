@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import User
+from .models import User, Article
 import json
 from django.views.decorators.csrf import csrf_exempt,  ensure_csrf_cookie
 from newsapi.newsapi_client import NewsApiClient
@@ -29,8 +29,14 @@ def index(request):
     return render(request, "capstone/index.html")
 
 
+@login_required
 def bookmark(request):
-    return render(request, "capstone/bookmark.html")
+    # get the user articles
+    user_articles = request.user.user_newsfeeds.all()
+    user_articles = user_articles.order_by("-timestamps").all()
+    print(user_articles)
+    context = {"articles": user_articles}
+    return render(request, "capstone/bookmark.html", context)
 
 
 def login_view(request):
@@ -93,27 +99,40 @@ def search_news(request):
     data = json.loads(request.body)
     content = data.get("search", "")
     advance_content = [query for query in content.values()]
-    adv_selection =  all(advance_content)
+    adv_selection =  bool(advance_content[4])
+    print(advance_content, adv_selection)
     # this check if user chose advance option 
     if adv_selection:
+        # getting articles object
         news_topic = advance_content[0]
         news_country = advance_content[1]
         news_category = advance_content[2]
         news_language = advance_content[3]
         news_type = advance_content[4]
-        news_source = advance_content[5]
+        news_source = advance_content[5] 
+        news_date_start = advance_content[6]
+        news_date_end = advance_content[7]
+        news_domain = advance_content[8]
+        news_order = advance_content[9]
+      
+
         print(all(advance_content))
+        print(news_date_start, news_date_end)
         print(advance_content, len(advance_content), 'check')
+        print(news_type, "test title")
+
 
         # use user selection to get news type 
         if news_type == "Headlines":
             print("Headlines")
-            headlines = api.get_top_headlines(sources=news_source, q=news_topic, category=news_category,country=news_country)
+            headlines = api.get_top_headlines( q=news_topic, category=news_category,country=news_country)
+            # /v2/everything
             return JsonResponse(headlines, status=201)
 
         if news_type == "Everything":
             print("Everything")
-            all_articles = api.get_everything(q=news_topic,sources=news_source, language=news_language,  )
+            news_source = news_source if news_source else None
+            all_articles = api.get_everything(q=news_topic,sources=news_source, domains=news_domain, from_param=news_date_start, to=news_date_end, language=news_language, sort_by=news_order)
             return JsonResponse(all_articles, status=201)
 
 
@@ -172,12 +191,30 @@ def get_by_sources():
     # print(api.get_everything(q='anime'))
     # # print(sources)
 
-def user_view(request):
-    pass
+def user_view(request, nonce):
+    if request.method == "GET":
+        if nonce == "user":
+            if request.user.pk:
+                return JsonResponse({"username": request.user.username})
+            return JsonResponse({"username": 404})
+    return JsonResponse({'err': "Not allowed"})
 
 
 def save_articles(request):
-    pass
+    if request.method == "PUT":
+        if request.user:
+            data = json.loads(request.body)
+            content = data.get("article", "")
+            user_id = request.user
+            # init a new article
+            print(content)
+            article = Article(user=user_id, description=content.get('des'), title=content.get('title'), author=content.get('author'), image=content.get('img'), imgurl=content.get('url'), source=content.get('source'), timestamps=content.get('date'))
+            print(article)
+            article.save()
+        return JsonResponse({"status": "ok"})
+    else:
+         return JsonResponse({"status": "A PUT request is needed"})
+
 
 
 def update_articles(request):

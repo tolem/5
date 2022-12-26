@@ -14,7 +14,7 @@
 
 <form method="POST"  action=""  class="input-group input-group-lg search searchForm">
     {% csrf_token %}
-  <input type="search" class="form-control searchQuery" aria-label="Text input with segmented dropdown button">
+  <input type="search" class="form-control searchQuery" aria-label="Text input with segmented dropdown button" placeholder="Put your search title here!">
 
   <button type="submit" class="btn bg-dark submitBtn"><i class="bi bi-search "></i></button>
   <button class="btn btn-danger" type="reset"><i class="bi bi-x-circle-fill"></i></button>
@@ -28,16 +28,8 @@
 <div class="collapse adv-search" id="advancedOptions">
   <!-- advanced options content goes here  -->
   <div class="px-3 pb-2">
-        <div class="row">
-        <div class="col-md mb-3 searchLocation">
-          <h6> Source </h6>
-          <input type="text" class="form-control news-source" placeholder="Enter a source like BBC News CNN Forbes">
-        </div>
-      </div>
-
-      <div class="row">
+      <div class="row type">
         <div class="col-md mb-3">
-        
             <label for="newsType">  <h6> Filter news by type</h6></label>
             <select class="form-control" id="newsType">
               <option value="Everything">Everything</option>
@@ -45,7 +37,52 @@
             </select>
         </div>
       </div>
-        <div class="row">
+
+
+    <div class="row options Everything ">
+        <div class="col-md-3 mb-3">
+            <label for="from">enter a start date</label>
+            <input type="date" class="form-control" id="from" required>
+            <div class="invalid-feedback">
+                Please provide a valid form date.
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="to">Enter an end date </label>
+            <input type="date" class="form-control" id="to" required>
+            <div class="invalid-feedback">
+                Please provide a valid form date.
+            </div>
+        </div>
+  </div>
+  
+
+    <div class="row options Everything Headlines">
+        <div class="col-md mb-3 searchLocation ">
+          <h6> Source </h6>
+          <input type="text" class="form-control news-source" placeholder="Enter a source like BBC News CNN Forbes">
+        </div>
+      </div>
+
+    <div class="row options Everything">
+        <div class="col-md mb-3">
+          <h6> Domain </h6>
+          <input type="text" class="form-control search-domain" placeholder="Enter a site domain like bbc.co.uk,techcrunch.com ">
+        </div>
+    </div>
+
+    <div class="row options Everything">
+        <div class="col-md mb-3">  
+            <label for="orderNews">  <h6> Order news by  </h6></label>
+            <select class="form-control" id="orderNews">
+              <option value="relevancy">relevancy</option>
+              <option value="popularity"> popularity </option>
+              <option value="publishedAt"> publishedAt </option>
+            </select>
+        </div>
+      </div>
+
+        <div class="row options Everything Headlines">
         <div class="col-md mb-3">
         
             <label for="newsLang">  <h6> Filter news by language</h6></label>
@@ -63,7 +100,7 @@
             </select>
         </div>
       </div>
-      <div class="row">
+      <div class="row options Headlines">
             <div class="col-md mb-3">
             <h6><label for="inputCategory">Category</label> </h6>
             <select id="inputCategory" class="custom-select">
@@ -78,7 +115,7 @@
         </div>
 
        </div>
-       <div class="row">
+       <div class="row options Headlines">
         <div class="col-md mb-3">
                <h6><label for="inputState">Search by Country</label> </h6>
                 <select id="inputState" class="custom-select">
@@ -141,12 +178,18 @@
          
         </div>
       </div>
+    <div class="row options Everything">
+        <div class="col-md mb-3">
+          <h6> Result Page </h6>
+          <input type="text" class="form-control search-domain" placeholder="Enter a page number ">
+        </div>
+    </div>
    
-     <div class="grid">
+     <div class="grid options Everything Headlines">
         <button type="button" class="btn-lg btn-block btn-primary advanced-search">Search </button>
       </div>
       <br/>
-      <div class="grid">
+      <div class="grid options Everything Headlines">
         <a class="btn btn-danger btn-block btn-lg" data-toggle="collapse" href="#advancedOptions" role="button" aria-expanded="false" aria-controls="advancedOptions">Close Advanced Options</a>          
       </div>
 
