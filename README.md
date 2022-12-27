@@ -9,9 +9,17 @@ The web app is distintive as it supports user registration and storing of data. 
      - views.py
           This file contains the site view that controls what a users sees on the site. The website main logic are implemented here,           such as login, and registration authentication. Also, the backend server and calls made through AJAX to server is handle             here. 
      - model.py
-          This file contains the database model, it is where model logic is implemented for Users and Articles 
+          This file contains the database model, it is where model logic is implemented for both Users and Articles model
 2. static
-3. templates
+     - index.js
+          This file contains the site view that controls what a users sees on the site. The website main logic are implemented here,           such as login, and registration authentication. Also, the backend server and calls made through AJAX to server is handle             here. 
+     - bookmarks.js
+          This file contains the database model, it is where model logic is implemented for both Users and Articles model
+          
+     - style.css
+          All custom CSS3 used in this web application are found here, it contains the style assets and design logic used for this             web application.
+       
+4. templates
 
 
 
