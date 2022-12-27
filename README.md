@@ -6,10 +6,10 @@ The web app is distintive as it supports user registration and storing of data. 
 
 ### file structure
 1. root
-  - views.py
-   This file contains the site view that controls what a users sees on the site. The website main logic are implemented here, such as login, and registration authentication. Also, the backend server and calls made through AJAX to server is handle here. 
-   - model.py
-  This file contains the database model, it is where model logic is implemented for Users and Articles 
+     - views.py
+          This file contains the site view that controls what a users sees on the site. The website main logic are implemented here,           such as login, and registration authentication. Also, the backend server and calls made through AJAX to server is handle             here. 
+     - model.py
+          This file contains the database model, it is where model logic is implemented for Users and Articles 
 2. static
 3. templates
 
