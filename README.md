@@ -28,7 +28,10 @@ The web app is distintive as it supports user registration and storing of data. 
           
      - bookmark.html
           All custom CSS3 used in this web application are found here, it contains the style assets and design logic used for this             web application.
-4. templates
+
+
+4. How to run the web application
+     - from the root folder run requirements.txt via pip install -r requirement.txt
 
 
 
