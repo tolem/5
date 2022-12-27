@@ -20,7 +20,7 @@ The web app is distintive as it supports user registration and storing of data. 
           All custom CSS3 used in this web application are found here, it contains the style assets and design logic used for this             web application.
         
 
-3. *templates*
+3. #*templates*#
      - layout.html
          This file contain the base html layout from which other html component inherits via Jinja template engine
      - index.html
