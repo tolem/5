@@ -24,10 +24,10 @@ The web app is distintive as it supports user registration and storing of data. 
      - layout.html
          This file contain the base html layout from which other html component inherits via Jinja template engine
      - index.html
-          This file contains the database model, it is where model logic is implemented for both Users and Articles model
+          Contains the home page, the default page shown to a user that visits the site, it contains HTML5 code and vanilla Bootstraps. The main components found here is a Bootstrap form that accepts users input and renders search result. 
           
      - bookmark.html
-          All custom CSS3 used in this web application are found here, it contains the style assets and design logic used for this             web application.
+          Contains bookmark page, this page is visible to only loggedin user, it is not shown otherwise. The fle contains Jinja template syntax for rendering dynamic HTML and Bootstraps. 
 
 
 #### How to run the web application
