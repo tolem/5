@@ -32,7 +32,7 @@ The web app is distintive as it supports user registration and storing of data. 
 
 #### How to run the web application
 * from the root folder
-     -  run requirements.txt via pip install -r requirement.txt
+     `  run requirements.txt via pip install -r requirement.txt`
 
 
 
