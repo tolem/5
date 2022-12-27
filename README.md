@@ -30,7 +30,7 @@ The web app is distintive as it supports user registration and storing of data. 
           Contains bookmark page, this page is visible to only loggedin user, it is not shown otherwise. The fle contains Jinja template syntax for rendering dynamic HTML and Bootstraps. 
 
 
-#### How to run the web application
+### How to run the web application
 * from the root folder run requirements.txt via
      `  pip install -r requirement.txt`
 
