@@ -31,7 +31,7 @@ The web app is distintive as it supports user registration and storing of data. 
 
 
 ### How to run the web application
-* 
+
 * from the root folder create and activate a virtualenv like this (instructions may differ on Windows):
 
 ```
@@ -64,6 +64,3 @@ You can view the example at http://127.0.0.1:8000
 #### License
 
 MIT
-
-
-
