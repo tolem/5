@@ -31,8 +31,39 @@ The web app is distintive as it supports user registration and storing of data. 
 
 
 ### How to run the web application
-* from the root folder run requirements.txt via
-     `  pip install -r requirement.txt`
+* 
+* from the root folder create and activate a virtualenv like this (instructions may differ on Windows):
+
+```
+$ python -m venv myvenv
+$ source myvenv/bin/activate
+```
+
+Install project requirements:
+
+```
+$ pip install -r requirements.txt
+```
+
+Run migrations:
+
+```
+$ python manage.py makemigrations capstone
+$ python manage.py migrate capstone
+```
+
+
+Now you can start the server:
+
+```
+$ python manage.py runserver
+```
+
+You can view the example at http://127.0.0.1:8000
+
+#### License
+
+MIT
 
 
 
