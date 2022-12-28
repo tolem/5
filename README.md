@@ -14,7 +14,7 @@ The web app is distintive as it supports user registration and storing of data. 
      - index.js
           Contained in this file are JavaScript code that enable dynamic functionality for the site, here is found event listenes that enable the page to respond based on user interaction. Also found are AJAX scripts used to communicate from the front end to the backend scripts. The program makes calls to the server, handles response and provides the user with releant news where found. It also has code that paginates the returned object to improve user interface.   
      - bookmarks.js
-          This file is specific for the bookmark page, it contains code that manipuates the HTML DOM for that page. Here code for dynamic rendering and updating the database when a user deletes an artices. It also contains an infinity rendering when a bookmarks exceed 10.  
+          This file is specific for the bookmark page, it contains code that manipuates the HTML DOM for that page. Here code for dynamic rendering and updating the database when a user deletes an artices. It also contains an infinity scroll rendering when a bookmarks exceed 5 per page.  
           
      - style.css
           All custom CSS3 used in this web application are found here, it contains the style assets and design logic used for this             web application.
