@@ -1,46 +1,113 @@
 {% extends "capstone/layout.html" %}
 {% load static %}
 
+{% block style %}
+<link href="{% static 'capstone/styles.css' %}" rel="stylesheet">
+{% endblock %}
+
 
 {% block body %}
 
 <h2>{{user.username}} Bookmarks</h2>
 
 <div class="container">
-  <ul class="list-unstyled">
-	{% for news in articles %}
-	<div class="media">
+  <ul class="list-unstyled infinite-container">
+  	{% csrf_token %}
+	{% for news in articles  %}
+	<div class="media bookmarks infinite-item" id="news{{ news.id }}">
 		<img src={{news.image}} width="64" height="64" class="align-self-center mr-3" alt={{news.title}}>
 		<div class="media-body">
-			 <h5 class="mt-0 mb-1">{{ news.title }} </h5>
+
+			 <h5 class="mt-0 mb-1" style="text-align:left;">{{ news.title }} </h5>
 			  {{ news.timestamps | date }}  </br> <strong> {{ news.source }} </strong> </br>
 			 {{ news.description }} 
 			
 			</br>
 			 Written by {{ news.author }} 
 			</br>
-			<!-- </br> -->
+		
 			  <span><a href={{news.imgurl}} target="_blank">Link to Full Article</a></span>
-			</br>
-			<button class="btn btn-danger delete" type="submit">Delete article</button>
-				
-
+			
+			<button class="btn btn-danger rounded-pill delete" data-btn="news{{ news.id }}" type="submit">Delete bookmark</button>	
+	
 		</div>
 	 </div>
 	</br>
 	{% empty %}
 	<p> Hi {{ user.username }}, you do not have any bookmarks headover to <a href="{% url 'index' %}">Home</a> to get started</p>
-
+</br>
 	{% endfor %}
 	</ul>
 </div>
+
+
+ {% if articles.has_next %}
+ 	<a class="pagination__next" href="?page={{articles.next_page_number}}"></a>
+ 	{% endif %}
+ 	<div class="page-load-status">
+  <div class="loader-ellips infinite-scroll-request">
+    <span class="loader-ellips__dot"></span>
+    <span class="loader-ellips__dot"></span>
+    <span class="loader-ellips__dot"></span>
+    <span class="loader-ellips__dot"></span>
+  </div>
+  <p class="infinite-scroll-last">End of content</p>
+  <p class="infinite-scroll-error">No more pages to load</p>
+</div>
+
 {% endblock %}
+
 
 {% block script %}
-    <script src="{% static 'capstone/bookmarks.js' %}"> </script>
+    <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.js"> </script>
+      <script src="{% static 'capstone/bookmarks.js' %}"></script>
+      <script type="text/javascript">
+
+      	document.addEventListener('DOMContentLoaded', ()=>{
+      		// var infinite = new Waypoint.Infinite({
+	// 	element: document.querySelector('.infinite-container')
+	// });
+	let elem = document.querySelector('.infinite-container');
+	console.log(elem);
+	// init Infinte Scroll
+	let infScroll = new InfiniteScroll(elem, {
+  	  // options...
+	  path: '.pagination__next',
+	  append: '.infinite-item',
+	  history: false,
+	  status: '.page-load-status',
+	  hideNav: '.pagination__next',
+	  scrollThreshold: 50,
+});
+
+function getPenPath() {
+  const nextPenSlugs = document.querySelector('.pagination__next').getAttribute('href');
+
+  let slug = nextPenSlugs[ this.loadCount ];
+  console.log(slug);
+  if ( slug ) return `/localhost/bookmarks/${slug}`;
+
+}
+
+// 	infScroll.loadNextPage().then( function( loaded ) {
+//   // next page has been loaded
+//   let { response, body, items } = loaded;
+//   console.log( response.path );
+//   console.log( body );
+//   console.log( items );
+// } );
+
+    
+
+      	});
+       	
+	   </script>
+
+
+
 {% endblock %}
 
-
+  
 <div class="media">
   <div class="media-body">
     <h5 class="mt-0 mb-1">Media object</h5>

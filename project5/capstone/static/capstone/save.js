@@ -248,3 +248,148 @@ function(event){
 // <!--           <div class="input-group mb-3">
 
 //         </div> -->
+
+    // # article_date =     content = models.TextField(verbose_name="Post", default="", max_length=2048, null=False)
+
+			// articles.forEach((el, idx) => { 
+			// if (start <= idx+1 <= end){
+
+			// 	console.log(idx, "counter", counter);
+			// 	el.style.display = "none";
+			// }
+			// else{
+			// 	el.style.display = "none";
+			// }
+			// });
+
+
+	// // When DOM loads, render the first 20 posts
+// document.addEventListener('DOMContentLoaded', load);
+
+
+// // Start with first post
+// let counter = 1;
+
+// // Load posts 20 at a time
+// const quantity = 10;
+
+// If scrolled to bottom, load the next 20 posts
+// window.onscroll = () => {
+// 	const articles = document.querySelectorAll('.bookmarks');
+// 	if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+// 		load(articles);
+// 	}
+// };
+
+// // Load next set of posts
+// function load(articles) {
+// 	// Set start and end post numbers, and update counter
+// 	const start = counter;
+// 	const end = start + quantity - 1;
+// 	counter = end + 1;
+// 	console.log(start, end, counter, articles);
+
+// 	if (articles !== undefined){
+
+// 	for (let i = 0; i < counter; i++){
+// 			console.log(articles[i])
+// 			articles[i].style.display = "block";
+// 		}
+// 	}
+// 	return 
+
+// 	// // Get new posts and add posts
+// 	// fetch(`/posts?start=${start}&end=${end}`)
+// 	// .then(response => response.json())
+// 	// .then(data => {
+// 	// data.posts.forEach(add_post);
+// 	// })
+
+// };
+
+// // Add a new post with given contents to DOM
+// function add_post(contents) {
+// 	// Create new post
+// 	const post = document.createElement('div');
+// 	post.className = 'post';
+// 	post.innerHTML = contents;
+
+// 	// Add post to DOM
+// 	document.querySelector('#posts').append(post);
+// };
+
+
+// const fetchPage = async (url) => {
+// 	let headers = new Headers();
+// 	headers.append("X-Requested-With", "XMLHttpRequest");
+// 	return fetch(url, {headers});
+// }
+
+// const appendElements = async (scrollElement, counter, baseUrl) => {
+// 	let url = `${baseUrl}?page=${counter + 1}`;
+// 	let req = await fetchPage(url);
+// 	if req.ok{
+		
+// 	}
+// }
+
+		// attachInfiniteScroll(bottomSentinel, scrollElement, baseUrl);
+	    // if is_ajax(request):
+      //   return render(request, "capstone/bookmark.html", context)
+    // <!-- <script src="{% static 'capstone/jquery.waypoints.min.js' %}"></script> -->
+    // <!-- <script src="{% static  'capstone/infinite.min.js' %}"> </script> -->
+
+
+	 // `  pip install -r requirement.txt`
+
+
+
+
+// <h2 id="title_page"> All Tweets by {{ profile_users.username }}</h2>
+
+
+
+// <div id="posts-section">  
+// 	{% for post in posts%}
+// 	 <div class="card">
+//       <div class="card-body tweetsdiv" data-tweets="{{ post.id }}">
+//         <h5 class="card-title"> {{ post.author }} </h5>
+
+//         {% if user.pk == profile_users.pk %}
+//         <a href="#" class="card-link btn-sm btn-primary editButton"  data-post="{{ post.id }}"  role='button'> Edit </a>
+//         {% endif %}
+//         <p class="card-text" id="{{ post.id }}"> {{ post.content }} </p> 
+//     	<span style=color:grey;> {{ post.timestamps }} </span> <br/>
+//     	<br/>
+//         <span href="#" class="card-link"> <ion-icon name="heart" id="{{ post.id }}box" aria-pressed="false"></ion-icon></span> <span id="{{ post.id }}post"> {{ post.user_likes }} likes <br/> Comment</span>
+
+//       </div>
+//     </div> 
+//     {% empty %}
+//     No Post yet
+// 	{% endfor %}
+// </div>
+  
+
+//   <nav aria-label="Page navigation example">
+//   <ul class="pagination justify-content-center" id="page-number">
+//     <li class="page-item" >
+//       <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
+//     </li>
+//     <li class="page-item"> 
+//       <a class="page-link" href="#">Next</a>
+//     </li>
+//   </ul>
+// </nav>
+// {% endblock %}
+
+
+// {% block footer %}
+
+// <footer>{{profile_users.username}} Profile Page </footer>
+
+// {% endblock %}
+
+// {% block script %}
+//     <script src="{% static 'network/profile.js' %}"> </script>
+// {% endblock %}

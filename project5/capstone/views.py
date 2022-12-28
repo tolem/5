@@ -1,11 +1,12 @@
 # Create your views here.
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse
 from .models import User, Article
 import json
+import time
 from django.views.decorators.csrf import csrf_exempt,  ensure_csrf_cookie
 from newsapi.newsapi_client import NewsApiClient
 import environ
@@ -16,6 +17,7 @@ from django.http import JsonResponse
 from itertools import chain
 from django.views.generic import ListView
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_GET, require_POST
 
 env = environ.Env()
 # reading .env file
@@ -29,13 +31,30 @@ def index(request):
     return render(request, "capstone/index.html")
 
 
+def is_ajax(request):
+    """ This functionality is used as request.is_ajax() is deprercated """
+    return request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
+
+
 @login_required
+@require_GET
 def bookmark(request):
     # get the user articles
     user_articles = request.user.user_newsfeeds.all()
     user_articles = user_articles.order_by("-timestamps").all()
-    print(user_articles)
-    context = {"articles": user_articles}
+    page_num = int(request.GET.get('page', 1))
+    paginator = Paginator(user_articles, per_page=5)
+    try:
+        page = paginator.page(page_num)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    articles = page
+    context = {"articles": articles}
+
     return render(request, "capstone/bookmark.html", context)
 
 
@@ -180,10 +199,6 @@ def paginate_news(request, endpoint):
 
 
 
-def get_headlines():
-    pass
-
-
 def get_by_sources():
     pass
     # headlines = api.get_top_headlines()
@@ -200,23 +215,57 @@ def user_view(request, nonce):
     return JsonResponse({'err': "Not allowed"})
 
 
-def save_articles(request):
-    if request.method == "PUT":
-        if request.user:
+def add_articles(request):
+    try:
+        if request.method == "PUT":     
             data = json.loads(request.body)
             content = data.get("article", "")
             user_id = request.user
             # init a new article
             print(content)
-            article = Article(user=user_id, description=content.get('des'), title=content.get('title'), author=content.get('author'), image=content.get('img'), imgurl=content.get('url'), source=content.get('source'), timestamps=content.get('date'))
+            article = Article.objects.create(user=user_id, description=content.get('des'), title=content.get('title'), author=content.get('author'), image=content.get('img'), imgurl=content.get('url'), source=content.get('source'), timestamps=content.get('date'))
             print(article)
             article.save()
-        return JsonResponse({"status": "ok"})
-    else:
-         return JsonResponse({"status": "A PUT request is needed"})
+            return JsonResponse({"status": "ok"})
+
+        elif request.method == "DELETE":
+            data = json.loads(request.body)
+            article_id = int(data.get("id", 0))
+            print(article_id)
+            all_articles = request.user.user_newsfeeds.all()
+            article = request.user.user_newsfeeds.filter(pk=article_id)
+            article.delete()
+            print(all_articles.count())
+            return JsonResponse({"message": "the requested artice was deleted"})
+
+
+        else:
+             return JsonResponse({"status": "A PUT request is needed"})
+
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User does not exist"})
 
 
 
-def update_articles(request):
-    pass
+def user_profile(request):
+    return render(request, "capstone/userprofile.html")
 
+# infinity scroll 
+def infinity_scroll(request):
+
+    # Get start and end points
+    start = int(request.GET.get("start") or 0)
+    end = int(request.GET.get("end") or (start + 9))
+
+    # Generate list of posts
+    data = []
+    for i in range(start, end + 1):
+        data.append(f"Post #{i}")
+
+    # Artificially delay speed of response
+    time.sleep(1)
+
+    # Return list of posts
+    return JsonResponse({
+        "posts": data
+    })

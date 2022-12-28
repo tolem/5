@@ -1,0 +1,40 @@
+{% extends "capstone/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{% block style %}
+<link href="{% static 'capstone/styles.css' %}" rel="stylesheet">
+{% endblock %}
+
+<div><h1> Profile </h1>
+
+    <img src="https://robohash.org/23.238.193.4.png" style="width:20vw; display: inline-block;" class="img-fluid img-thumbnail rounded-pill" alt="Responsive image"/>
+
+<ul class="list-group"  style="width:20vw; display: inline-block; vertical-align:middle;">
+<li class="list-group-item d-flex justify-content-between align-items-center">
+  Name:
+    <span class="text" id="username"> {{ user.username  }}</span>
+  </li>
+   <li class="list-group-item d-flex justify-content-between align-items-center">
+      Joined:
+    <span class="text-capitalize text-wrap">{{ user.date_joined|date:"M, d, Y" }}</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+     email :
+    <span id="countbadge" class="badge badge-primary badge-pill">{{ user.email }}</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+  status:
+    <span class="badge badge-primary badge-pill">{% if user.pk %} active {% else %} false {% endif %}</span>
+  </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+   bookmarks
+    <span class="badge badge-primary badge-pill">{{ user.user_feeds }}</span>
+  </li>
+
+</ul>
+</div>
+
+
+{% endblock %}

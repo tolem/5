@@ -15,7 +15,6 @@ class Article(models.Model):
     imgurl = models.URLField(max_length=1024, blank=True, null=True)
     image = models.URLField(max_length=1024, blank=True, null=True)
     source = models.CharField(max_length=128, default=None)
-    # article_date =     content = models.TextField(verbose_name="Post", default="", max_length=2048, null=False)
     timestamps = models.DateTimeField(null=True)
 
     def __str__(self):

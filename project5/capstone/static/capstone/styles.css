@@ -22,15 +22,6 @@ footer{
 }
 
 
-
-
-
-/*body {
-/*  background-color: lightblue;*/
-/*  margin: 50px auto;
-}*/
-/**/
-
 form{
   margin: 50px auto;
 }
@@ -74,3 +65,20 @@ form{
 .bi-x-circle-fill, .bi-search{
   color: white;
 }
+
+.infinity-item{
+  margin-top: 75px;
+}
+
+.page-load-status {
+  display: none; /* hidden by default */
+  padding-top: 20px;
+  border-top: 1px solid #DDD;
+  text-align: center;
+  color: #777;
+}
+
+
+
+
+
