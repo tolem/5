@@ -78,7 +78,9 @@ form{
   color: #777;
 }
 
-
+.bi-balloon-heart-fill:hover {
+  cursor: pointer;
+}
 
 
 

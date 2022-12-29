@@ -1,15 +1,15 @@
 # Create your views here.
+import json
+import time
+import environ
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse
 from .models import User, Article
-import json
-import time
 from django.views.decorators.csrf import csrf_exempt,  ensure_csrf_cookie
 from newsapi.newsapi_client import NewsApiClient
-import environ
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -133,6 +133,9 @@ def search_news(request):
         news_date_end = advance_content[7]
         news_domain = advance_content[8]
         news_order = advance_content[9]
+        news_page = advance_content[10]
+        news_page = int(news_page) if news_page.isnumeric() else 1
+
       
 
         print(all(advance_content))
@@ -151,7 +154,7 @@ def search_news(request):
         if news_type == "Everything":
             print("Everything")
             news_source = news_source if news_source else None
-            all_articles = api.get_everything(q=news_topic,sources=news_source, domains=news_domain, from_param=news_date_start, to=news_date_end, language=news_language, sort_by=news_order)
+            all_articles = api.get_everything(q=news_topic,sources=news_source, domains=news_domain, from_param=news_date_start, to=news_date_end, language=news_language, sort_by=news_order, page=news_page)
             return JsonResponse(all_articles, status=201)
 
 
@@ -197,15 +200,6 @@ def paginate_news(request, endpoint):
         return HttpResponse(status=404)
 
 
-
-
-def get_by_sources():
-    pass
-    # headlines = api.get_top_headlines()
-    # # sources = api.get_sources()
-    # print(api.get_everything(q='anime'))
-    # # print(sources)
-
 def user_view(request, nonce):
     if request.method == "GET":
         if nonce == "user":
@@ -246,9 +240,16 @@ def add_articles(request):
         return JsonResponse({"error": "User does not exist"})
 
 
-
+@login_required
 def user_profile(request):
-    return render(request, "capstone/userprofile.html")
+    try:
+        info_articles = request.user.user_newsfeeds.all()
+        context = {'allCount':info_articles.count(), "likeCount": info_articles.filter(like=True).count()}
+        return render(request, "capstone/userprofile.html", context)
+
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
 
 # infinity scroll 
 def infinity_scroll(request):
@@ -269,3 +270,35 @@ def infinity_scroll(request):
     return JsonResponse({
         "posts": data
     })
+
+
+@login_required
+def isliked(request):
+    # Query for requested users
+    data = json.loads(request.body)
+    post_id = int(data.get("liked", -1))
+    print(post_id)
+    try:
+
+        post = Article.objects.get(pk=post_id)
+    except Article.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    # Update whether post is updated or is liked
+    if request.method == "PUT":
+            post.like = True
+            post.save()
+            return HttpResponse(status=204)
+
+
+    elif request.method == "DELETE":
+        post.like = False
+        post.save()
+        return HttpResponse(status=204)
+
+
+    # Post must be via GET or PUT or DELETE
+    else:
+        return JsonResponse({
+            "error": "PUT or DELETE request required."
+        }, status=400)

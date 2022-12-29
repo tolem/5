@@ -19,10 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const orderNews = document.querySelector("#orderNews");
     const startQueryDate = document.querySelector("#from");
     const endQueryDate = document.querySelector("#to");
+    const searchPage = document.querySelector('#searchPage');
     const searchDomain = document.querySelector('.search-domain');
     const advancedOptions = document.querySelectorAll('.options');
     const headLineElements = document.querySelectorAll('.headlines');
     const everytingElements = document.querySelectorAll('.Everything');
+
 
 	const csrftoken = getCookie('csrftoken'); // csrf token from page
 	console.log(csrftoken, searchQuery, submitQuery, searchQuery.value.trim().length );
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	orderNews.value = '';
 
 
-	let advancedButtons = [selectCountry, selectCategory, selectNewsType, selectNewsSource];
+	let advancedButtons = [selectCountry, selectCategory, selectNewsType, selectNewsSource, searchPage, searchDomain];
 
 
 	console.log(advancedButtons, "test0");
@@ -75,19 +77,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		const changeState = (newsType === "Headlines") ? "Everything" : "Headlines";
 		const toggleState = document.querySelectorAll(`.${changeState}`);
-		// Here I change the state by toggling the form visibility
-		toggleState.forEach(arr => arr.style.display = "none");
-		playState.forEach( arr => arr.style.display = "block");
+		// changes the state by toggling the form visibility
+		toggleState.forEach(el => el.style.display = "none");
+		playState.forEach( el => {
+			// if not date element 
+			if (el.hasAttribute("data-date")){
+				el.style.display = "flex";
+
+			}
+			else{
+				el.style.display = "block";
+			}
+		});
 
 		}
 		
 		);
-
-
-	// selectNewsType.addEventListener('input', () =.{
-	// 	changeState = document.querySelectorAll
-	// })
-
 
 
 		for (let inputs in advancedButtons){
@@ -102,11 +107,10 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 			});
 				}
-
 			
 
 	advancedSearch.onclick = () => {
-		console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value, "test0");
+		console.log(selectCountry.value, selectCategory.value, selectNewsType.value, selectNewsSource.value, searchDomain.value, "test0");
 		// invokes the search form 
 		searchForm.requestSubmit();
 	}
@@ -125,19 +129,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	console.log(searchLocation.value, searchQuery.value);
 
 
-
-
-
-
 function findNews(event){
 
 	// body...
 	let counter = 1;
 	event.preventDefault();
-	// console.log(searchLocation.value, searchQuery.value);
-	// findNews(searchQuery.value, searchLocation.value);
 
-	content =  {'query': searchQuery.value, 'country': selectCountry.value, 'category': selectCategory.value, 'lang': selectNewsLang.value,  'newsType': selectNewsType.value, 'newsSource': selectNewsSource.value, 'startDate': startQueryDate.value, 'endDate': endQueryDate.value, 'domain': searchDomain.value, 'order': orderNews.value};
+	content =  {'query': searchQuery.value, 'country': selectCountry.value, 'category': selectCategory.value, 'lang': selectNewsLang.value,  'newsType': selectNewsType.value, 'newsSource': selectNewsSource.value, 'startDate': startQueryDate.value, 'endDate': endQueryDate.value, 'domain': searchDomain.value, 'order': orderNews.value, 'page': searchPage.value};
 
 	fetch(`news/search`, {
 	    method: 'POST',
@@ -161,9 +159,6 @@ function findNews(event){
 
 
 	}
-
-
-
 
 });
 
@@ -271,7 +266,7 @@ function viewNews(counter, displayBox, query, tokens){
 
 
 
-	           	imageTag.setAttribute("src", imageUrl);
+	           imageTag.setAttribute("src", imageUrl);
 
 
 	           parentDiv.classList.add("col", "mb-4");
@@ -300,7 +295,7 @@ function viewNews(counter, displayBox, query, tokens){
 	           }).then(resp => resp.json()).then(result => console.log(result)).catch(err => console.log(err));
 
 	           }
-
+	           // adding new element to DOM
 	           innerDiv.appendChild(headerTag);
 	           innerDiv.appendChild(contentTag);
 	           innerDiv.appendChild(firstLinkTag);
@@ -313,26 +308,11 @@ function viewNews(counter, displayBox, query, tokens){
 	           mainDiv.appendChild(parentDiv);
 
 
-	           // editPost.classList.add("card-link", "btn-sm", "btn-primary");
-	           // contentPost.classList.add('card-text');
-
 	});
 		displayBox.appendChild(mainDiv);
 
 
 		}).catch(err=>console.log(err));
-
-
-
-
-		// console.log(result)
-
-
-	
-	
-
-
-	// }
 
 
 

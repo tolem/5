@@ -12,6 +12,7 @@ class Article(models.Model):
     title = models.CharField(max_length=128, default=None)
     author = models.CharField(max_length=128, default=None)
     description = models.CharField(max_length=180, default=None)
+    like = models.BooleanField(default=False)
     imgurl = models.URLField(max_length=1024, blank=True, null=True)
     image = models.URLField(max_length=1024, blank=True, null=True)
     source = models.CharField(max_length=128, default=None)

@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	const bottomSentinel = document.querySelector('#bottom-sentinel');
 	const scrollElement = document.querySelector('#scroll-element');
 	const baseUel = "{% url 'bookmark' %}";
+	const likeBtn =  document.querySelectorAll('.bi-balloon-heart-fill');
+	console.log(likeBtn);
 
 
 	// load(articles); not needed django server renders DOM already 
@@ -25,6 +27,30 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 		);
 
+	likeBtn.forEach(btn => {
+		btn.style.color = "grey";
+		if (btn.dataset.like === "True"){
+			btn.style.color = "red";
+		}
+		
+		btn.onclick = (e) =>{
+			console.log(btn.dataset.like);
+			if (btn.dataset.like === "False"){
+				btn.dataset.like = "True";
+				console.log(btn.dataset.id, 'liked');
+				btn.style.color = "red";
+				liked_post(btn.dataset.id, csrftoken);
+			}
+			else{
+				btn.dataset.like = "False";
+				btn.style.color = "lightgrey";
+				unliked_post(btn.dataset.id, csrftoken);
+			}
+
+			console.log("clicked btn", btn.dataset.like);
+		}
+
+	})
 
 });
 
@@ -51,5 +77,27 @@ function deleteArticle (article, tokens) {
 	       return
 }
 
+
+function liked_post(id, tokens){
+  fetch(`/isliked`, {
+  method: 'PUT',
+  headers: {'X-CSRFToken': tokens},
+  body: JSON.stringify({
+      liked : id,
+  })
+  
+}).then(() =>{ console.log("sent to server"); }).catch(err => console.log(err));
+}
+
+function unliked_post(id, tokens){
+  fetch(`/isliked`, {
+  method: 'DELETE',
+  headers: {'X-CSRFToken': tokens},
+  body: JSON.stringify({
+      liked : id,
+  })
+  
+}).then(() =>{ console.log("sent to server"); }).catch(err => console.log(err));
+}
 
 

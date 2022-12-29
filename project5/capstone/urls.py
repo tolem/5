@@ -1,6 +1,4 @@
-
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
@@ -8,7 +6,7 @@ urlpatterns = [
     path("user/<str:nonce>", views.user_view, name="user"),
     path("mark", views.add_articles, name="article"),
     path('profile', views.user_profile, name='profile'),
-    # path("bookmarks/<str:nonce>", views.save_articles, name="article"),
+    path('isliked', views.isliked, name='likes'),
     path("bookmarks", views.bookmark, name="bookmark"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
