@@ -2,7 +2,7 @@
 This web application meets the requirement as it is utilize Django on the back-end and JavaScript on the front-end. Also, it uses two models on the backend (User and Article) and it is mobile responsive.
 
 ## Distinctiveness and Complexity
-The web app is distintive as it supports user registration and storing of data. Also the project is distinctive from the prior projects completed in the course as it is a news web application as site visitors canquery for news topic and find headlines that matches their interest, signed in user can bookmark articles or delete. Moreover, the web app is powered by [News API](https://newsapi.org/). A REST API that enables users to find  breaking news headlines from news sources and blogs across the web. 
+The web app is distintive as it supports user registration and storing of data. Also the project is distinctive from the prior projects completed in the course as it is a news web application  as site visitors can query for news topic and find headlines that matches their interest, signed in user can bookmark articles or delete. Moreover, the web app is powered by [News API](https://newsapi.org/). A REST API that enables users to find  breaking news headlines from news sources and blogs across the web. The web app make use of JavaScript in the frontend to process query and at the backend python to handle request to and from the API and the response is shown to the user from the Ajax call.
 
 ### file structure
 1. **_root_**
@@ -61,6 +61,8 @@ $ python manage.py runserver
 
 You can view the example at http://127.0.0.1:8000
 
+#### Additional information
+I intend to add other custom API moving forward, perhaps an API  that could process add context to news delivered from the API. Also plan to improve the profile page UX to show relevant information for users. 
 #### License
 
 MIT
