@@ -8,7 +8,7 @@
 
 {% block body %}
 
-<h2 class="mb-1 mt-0 ml-1">{{user.username}} Bookmarks</h2>
+<h2 class="mb-1 mt-0 ml-3">{{user.username}}'s Bookmarks</h2>
 
 <hr/>
 <div class="container">
@@ -22,7 +22,7 @@
 			 <span class=" h3 mt-0 mb-1" style="text-align:left;">{{ news.title }}  <span class="d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="top" title="Like button"> <i data-like={{news.like}} data-id={{news.id}} class="bi bi-balloon-heart-fill" 
 			 	> </i> </span></span>  <br/>
 
-			  {{ news.timestamps | date }}  </br> 
+			  <span class="pd-1 text-muted" style="color:grey;">{{ news.timestamps | date }} </span> </br> 
 			  <p>
 			 {{ news.description }} 
 			  <a class="mt-1 pd-1" href={{news.imgurl}} target="_blank">Link to Full Article</a>
@@ -42,7 +42,11 @@
 	 </div>
 	</br>
 	{% empty %}
-	<p> Hi {{ user.username }}, you do not have any bookmarks headover to <a href="{% url 'index' %}">Home</a> to get started</p>
+	<div class="alert alert-info" role="alert">
+		<h4 class="alert-heading">Ooops, Zero Bookmarks!</h4>
+	<p> Hi {{ user.username }}, you do not have any bookmarks</p>
+	<p class="mb-0"> Headover to <a href="{% url 'index' %}">Home</a> to get started </p>
+	</div>
 </br>
 </br>
 	{% endfor %}

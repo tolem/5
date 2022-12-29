@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 	if (displayBox.innerHTML === ""){
-		displayBox.innerHTML = "No articles yet, start your search?";
+		displayBox.innerHTML = "<p class='p text-center h4'> No articles yet, start your search?</p>";
 	}
 
 	searchForm.addEventListener('submit', findNews);
@@ -149,8 +149,14 @@ function findNews(event){
 	  	const queryCount = result.totalResults ? `${result.totalResults} Results` : "0 Result";
 	  	searchCount.innerHTML = queryCount;  
 	  	console.log(result);
-	  	viewNews(counter, displayBox, searchQuery.value, csrftoken);
-	  	console.log(pagination(result, displayBox, searchQuery.value, csrftoken));
+	  	document.querySelector('#result-display').innerHTML = `<div class="d-flex justify-content-center">
+  <div class="spinner-border text-secondary" style="width: 6rem; height: 6rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div></br>`;
+	  	setTimeout(() => {viewNews(counter, displayBox, searchQuery.value, csrftoken)}, 3000);
+
+	  	console.log(setTimeout(() => {pagination(result, displayBox, searchQuery.value, csrftoken)}, 3000));
 
 	}).catch(err=>console.log(err));
 
@@ -191,7 +197,11 @@ function viewNews(counter, displayBox, query, tokens){
 		response => response.json()).then( articles =>  {
 
 			if (articles.length === 0){
-						displayBox.innerHTML = 'No articles Found';
+						displayBox.innerHTML = `<div class="alert alert-info text-center ml-5 mr-5" role="alert">
+		<h4 class="alert-heading">No articles Found!</h4>
+	<p> Ooops, NewsApi could not find any article, try using variants of the search term or topic</p>
+	<p class="mb-0"> You can headover to <a href="http://localhost:8000/bookmarks">Bookmark</a> to view  your saved articles </p>
+	</div>`;
 				}
 			else{
 				// emptys the result box 
@@ -355,8 +365,9 @@ function pagination (newsPages, displayBox, query, token) {
                 previous[0].addEventListener('click', function () {
                     counter--
             	 document.querySelector('#result-display').innerHTML = '';
+
             		
-                   viewNews(counter, displayBox, query, token);
+  						viewNews(counter, displayBox, query, token);
 
                     if (counter === 1) {
                         previous[0].style.display = 'none';

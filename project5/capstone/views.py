@@ -146,8 +146,8 @@ def search_news(request):
 
         # use user selection to get news type 
         if news_type == "Headlines":
-            print("Headlines")
-            headlines = api.get_top_headlines( q=news_topic, category=news_category,country=news_country)
+            print("Headlines", news_topic, news_language)
+            headlines = api.get_top_headlines( q=news_topic, category=news_category, language=news_language, country=news_country)
             # /v2/everything
             return JsonResponse(headlines, status=201)
 

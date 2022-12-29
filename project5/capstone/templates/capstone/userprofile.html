@@ -7,11 +7,15 @@
 <link href="{% static 'capstone/styles.css' %}" rel="stylesheet">
 {% endblock %}
 
-<div><h1> Profile </h1>
+<div class=""><h1 class="d-inline-block"> {{ user.username}}'s Profile </h1>
+  <div class="text-center">
 
-    <img src="https://robohash.org/23.238.193.4.png" style="width:20vw; display: inline-block;" class="img-fluid img-thumbnail rounded-pill" alt="Responsive image"/>
+      <img src="https://robohash.org/23.238.193.4.png" style="width:20vw; display: inline-block;" class="img-fluid img-thumbnail rounded-pill rounded" alt="Responsive image"/>
 
-<ul class="list-group"  style="width:20vw; display: inline-block; vertical-align:middle;">
+</div>
+
+
+<ul class="list-group text-center"  style="width:20vw; display: inline-block; vertical-align:middle;">
 <li class="list-group-item d-flex justify-content-between align-items-center">
   Name:
     <span class="text" id="username"> {{ user.username  }}</span>

@@ -8,7 +8,7 @@
 
 
 {% block body %}
-    <h1>Hi {% if user.pk %} {{ user.username }} {% else %} Newbie {% endif %} </h1>
+    <h1 class="ml-3">Hi {% if user.pk %} {{ user.username }} {% else %} Newbie {% endif %} </h1>
 
    
 <div class="container">
@@ -178,6 +178,7 @@
          
         </div>
       </div>
+
     <div class="row options Everything">
         <div class="col-md mb-3">
           <h6> <label for="searchPage">Result Page</label> </h6>
@@ -201,8 +202,9 @@
 </hr>
 
 
-<h2 id= "result-count"> Results </h2>
+<h2 id= "result-count" class="ml-3"> Results </h2>
 <div id="result-display"></div>
+
 
 
 
