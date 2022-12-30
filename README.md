@@ -4,6 +4,8 @@ This web application meets the requirement as it is utilize Django on the back-e
 ## Distinctiveness and Complexity
 The web app is distintive as it supports user registration and storing of data. Also the project is distinctive from the prior projects completed in the course as it is a news web application  as site visitors can query for news topic and find headlines that matches their interest, signed in user can bookmark articles or delete. Moreover, the web app is powered by [News API](https://newsapi.org/). A REST API that enables users to find  breaking news headlines from news sources and blogs across the web. The web app make use of JavaScript in the frontend to process query and at the backend python to handle request to and from the API and the response is shown to the user from the Ajax call.
 
+
+
 ### file structure
 1. **_root_**
      - views.py
@@ -28,6 +30,8 @@ The web app is distintive as it supports user registration and storing of data. 
           
      - bookmark.html
           Contains bookmark page, this page is visible to only loggedin user, it is not shown otherwise. The fle contains Jinja template syntax for rendering dynamic HTML and Bootstraps. 
+     - userprofile. hmtl
+          Contains basic user profile information and a delete button for authenticated users to delete their account.
 
 
 ### How to run the web application
