@@ -20,6 +20,8 @@ The web app is distintive as it supports user registration and storing of data. 
           
      - style.css
           All custom CSS3 used in this web application are found here, it contains the style assets and design logic used for this             web application.
+     - form.css
+          All custom form styles for login and registration are found here.
         
 
 3. **_templates_**
@@ -30,7 +32,8 @@ The web app is distintive as it supports user registration and storing of data. 
           
      - bookmark.html
           Contains bookmark page, this page is visible to only loggedin user, it is not shown otherwise. The fle contains Jinja template syntax for rendering dynamic HTML and Bootstraps. 
-     - userprofile. hmtl
+          
+     - userprofile. html
           Contains basic user profile information and a delete button for authenticated users to delete their account.
 
 
