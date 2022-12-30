@@ -7,15 +7,14 @@
 <link href="{% static 'capstone/styles.css' %}" rel="stylesheet">
 {% endblock %}
 
-<div class=""><h1 class="d-inline-block"> {{ user.username}}'s Profile </h1>
+<div class="mb-5"><h1 class="d-inline-block mb-0  ml-3 mr-1"> {{ user.username}}'s Profile </h1>
   <div class="text-center">
 
       <img src="https://robohash.org/23.238.193.4.png" style="width:20vw; display: inline-block;" class="img-fluid img-thumbnail rounded-pill rounded" alt="Responsive image"/>
 
-</div>
+</br>
 
-
-<ul class="list-group text-center"  style="width:20vw; display: inline-block; vertical-align:middle;">
+<ul class=" mt-3 mb-0 list-group text-center"  style="width:40vw; display: inline-block; vertical-align:middle;">
 <li class="list-group-item d-flex justify-content-between align-items-center">
   Name:
     <span class="text" id="username"> {{ user.username  }}</span>
@@ -26,25 +25,57 @@
   </li>
   <li class="list-group-item d-flex justify-content-between align-items-center">
      email :
-    <span id="countbadge" class="badge badge-primary badge-pill">{{ user.email }}</span>
+    <span id="countbadge" class="text-capitalize text-wrap">{{ user.email }}</span>
   </li>
-  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+   Last Login
+    <span class="text-capitalize text-wrap">{{ user.last_login|date:"M, d, Y" }}</span>
+  </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
   status:
     <span class="badge badge-primary badge-pill">{% if user.pk %} active {% else %} false {% endif %}</span>
   </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-   bookmarks
-    <span class="badge badge-primary badge-pill">{{ user.user_feeds }}</span>
-  </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
-   Liked 
+    Bookmarks liked:
     <span class="badge badge-primary badge-pill">{{ likeCount }}</span>
   </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
-   Total 
+    Bookmarks total:
     <span class="badge badge-primary badge-pill">{{ allCount }}</span>
   </li>
 </ul>
+
+<br/>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger mt-5 " data-toggle="modal" data-target="#exampleModal">
+  deactivate account
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Danger! Delete Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text pd-1">
+        Hey {{user.username}}, are you sure about deleting your user account? All personal information and bookmarks you stored will be deleted; would like to proceed?
+      </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" > <a  href="{% url 'deactivate'%}" style="color:#fff;text-decoration: none;"> Deactivate </a> </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
 </div>
 
 

@@ -134,14 +134,11 @@ def search_news(request):
         news_domain = advance_content[8]
         news_order = advance_content[9]
         news_page = advance_content[10]
-        news_page = int(news_page) if news_page.isnumeric() else 1
-
-      
+        news_page = int(news_page) if news_page.isnumeric() else 1      
 
         print(all(advance_content))
         print(news_date_start, news_date_end)
-        print(advance_content, len(advance_content), 'check')
-        print(news_type, "test title")
+        print(advance_content, len(advance_content), 'test')
 
 
         # use user selection to get news type 
@@ -199,7 +196,8 @@ def paginate_news(request, endpoint):
     else:
         return HttpResponse(status=404)
 
-
+# gets current users name
+@login_required
 def user_view(request, nonce):
     if request.method == "GET":
         if nonce == "user":
@@ -302,3 +300,14 @@ def isliked(request):
         return JsonResponse({
             "error": "PUT or DELETE request required."
         }, status=400)
+
+
+@login_required
+def deactivate_account(request):
+    ''' deletes the reqeusted user account'''
+    try:
+        user_account = request.user
+        user_account.delete()
+        return HttpResponseRedirect(reverse("index"))
+    except User.DoesNotExist:
+        return HttpResponse('User does not exist', status=404)

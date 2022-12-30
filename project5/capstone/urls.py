@@ -13,5 +13,6 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path('news/search', views.search_news, name='search'),
     path("news/search/<str:endpoint>", views.paginate_news, name="paginate"),
+    path("account/deactivate", views.deactivate_account, name="deactivate"),
 
 ]

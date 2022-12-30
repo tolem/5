@@ -14,18 +14,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 	// load(articles); not needed django server renders DOM already 
-
+	// loops through buttons
 	deleteButton.forEach(ele => {
+	    // If hide button is clicked, delete the post
 		ele.onclick = (btn) => {
 		div_id = ele.getAttribute("data-btn");
 		btn_id =  Number(div_id.split("news")[1]);
 		console.log(btn_id);
+		ele.parentElement.parentElement.style.animationPlayState = 'running';
 		const removeArticle = document.querySelector(`#${div_id}`);
-		deleteArticle(btn_id, csrftoken);
-		removeArticle.remove();
+
+		ele.parentElement.parentElement.addEventListener('animationend', () =>  {
+                		console.log("delete sent!")
+                        deleteArticle(btn_id, csrftoken);
+                        removeArticle.remove();
+                    });
+		
 	}
 	}
 		);
+
 
 	likeBtn.forEach(btn => {
 		btn.style.color = "grey";
@@ -99,5 +107,7 @@ function unliked_post(id, tokens){
   
 }).then(() =>{ console.log("sent to server"); }).catch(err => console.log(err));
 }
+
+
 
 

@@ -17,9 +17,7 @@
   }
 }
 
-footer{
-  text-align: center;
-}
+
 
 
 form{
@@ -83,4 +81,67 @@ form{
 }
 
 
+@keyframes hide {
+                0% {
+                    opacity: 1;
+                    height: 100%;
+                    line-height: 100%;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                }
+                75% {
+                    opacity: 0;
+                    height: 100%;
+                    line-height: 100%;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                }
+                100% {
+                    opacity: 0;
+                    height: 0px;
+                    line-height: 0px;
+                    padding: 0px;
+                    margin-bottom: 0px;
+                }
+            }
 
+            .hide  {
+                float: right;
+            }
+
+
+            .post {
+/*                background-color: #77dd11;*/
+                padding: 20px;*/
+                margin-bottom: 10px;
+                line-height: 2em;
+                animation-name: hide;
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+                animation-play-state: paused;
+            }
+
+.tooltips {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltips .tooltiptext {
+  visibility: hidden;
+  width: 6.5em;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 12px;
+  padding: 7px 0;
+  font-size: 0.5em;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltips:hover .tooltiptext {
+  visibility: visible;
+}

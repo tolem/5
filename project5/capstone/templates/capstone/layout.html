@@ -33,6 +33,7 @@
 .footer {
   width: auto;
   padding: 0 15px;
+  text-align: center;
 
 }
 
@@ -58,7 +59,7 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'index' %}">Home</a>
+                  <a class="nav-link" href="{% url 'index' %}"> <i class="bi bi-house-heart-fill"></i> Home</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -86,7 +87,7 @@
         </div>
        </div>
 
-<footer class="footer mt-auto py-3 mb-0">
+<footer class="footer mt-auto py-3 mb-0  bg-light">
   <div >
     <span class="text-muted"> Powered by <span class="tag is-success"><a href="https://newsapi.org/" target="_blank">NewsAPI</a></span> <br> Created with <i class="bi bi-heart-fill"></i> by  Lami <br> CS50 &copy;2022</span>
   </div>

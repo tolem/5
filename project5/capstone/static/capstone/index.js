@@ -146,17 +146,19 @@ function findNews(event){
 	    })
 	  }).then(response => response.json()).then( result => {
 	  	console.log(result);
-	  	const queryCount = result.totalResults ? `${result.totalResults} Results` : "0 Result";
-	  	searchCount.innerHTML = queryCount;  
-	  	console.log(result);
+
 	  	document.querySelector('#result-display').innerHTML = `<div class="d-flex justify-content-center">
   <div class="spinner-border text-secondary" style="width: 6rem; height: 6rem;" role="status">
     <span class="sr-only">Loading...</span>
   </div>
 </div></br>`;
-	  	setTimeout(() => {viewNews(counter, displayBox, searchQuery.value, csrftoken)}, 3000);
+		setTimeout(() =>{  const queryCount = result.totalResults ? `Results (${result.totalResults})` : "Result (0)";
+	  	searchCount.innerHTML = queryCount;  
+	  	console.log(result);
+	  	}, 2000)
+	  	setTimeout(() => {viewNews(counter, displayBox, searchQuery.value, csrftoken)}, 2000);
 
-	  	console.log(setTimeout(() => {pagination(result, displayBox, searchQuery.value, csrftoken)}, 3000));
+	  	console.log(setTimeout(() => {pagination(result, displayBox, searchQuery.value, csrftoken)}, 2000));
 
 	}).catch(err=>console.log(err));
 
@@ -197,8 +199,9 @@ function viewNews(counter, displayBox, query, tokens){
 		response => response.json()).then( articles =>  {
 
 			if (articles.length === 0){
-						displayBox.innerHTML = `<div class="alert alert-info text-center ml-5 mr-5" role="alert">
-		<h4 class="alert-heading">No articles Found!</h4>
+				const user = document.querySelector('.username').innerHTML;
+				displayBox.innerHTML = `<div class="alert alert-info text-center ml-5 mr-5" role="alert">
+		<h4 class="alert-heading">${user}, no articles Found!</h4>
 	<p> Ooops, NewsApi could not find any article, try using variants of the search term or topic</p>
 	<p class="mb-0"> You can headover to <a href="http://localhost:8000/bookmarks">Bookmark</a> to view  your saved articles </p>
 	</div>`;
@@ -232,6 +235,9 @@ function viewNews(counter, displayBox, query, tokens){
 	           	const modalFooterClose = document.createElement('button');
 	            const modalFooterBookmark = document.createElement('button'); 
 	            const formatDate = new Date(article.publishedAt);
+	            const deleteButton = document.createElement('p');
+
+
 
 
 
@@ -273,6 +279,7 @@ function viewNews(counter, displayBox, query, tokens){
 	           	contentModal.appendChild(contentModalOutter);
 	           	const imageUrl = article.urlToImage ? article.urlToImage : "https://robohash.org/23.238.193.4.png";
 	           	const newsAuthor = article.author ? article.author : "Unknown";
+	           	deleteButton.innerHTML = `<button type="button" class="ml-1 mr-1  btn btn-danger" id="btn-danger">Remove</button> `;
 
 
 
@@ -280,7 +287,7 @@ function viewNews(counter, displayBox, query, tokens){
 
 
 	           parentDiv.classList.add("col", "mb-4");
-	           outerDiv.classList.add("card");
+	           outerDiv.classList.add("card", "ml-1", "mr-1");
 	           imageTag.classList.add("card-img-top");
 	           innerDiv.classList.add("card-body");
 	           headerTag.classList.add("card-title");
@@ -290,8 +297,9 @@ function viewNews(counter, displayBox, query, tokens){
 	           setAttr(secondLinkTag, {"href": article.url, "target": "_blank", "alt": article.title});
 
 	           // link tags 
-	           firstLinkTag.innerHTML = `Author: ${newsAuthor}<br/> Source: ${article.source['name']}</br> Published: ${formatDate}<br/>`;
-	           secondLinkTag.innerHTML = `<p class="card-text">link to website</p> <br/>`;
+	           firstLinkTag.innerHTML = `<p class="card-text"> Author: ${newsAuthor}<br/> Source: ${article.source['name']}</br> Published: ${formatDate}<br/></p>`;
+	           secondLinkTag.innerHTML = `<p class="card-text">link to website</p><br/>`;
+
 
 
 	           headerTag.innerHTML = article.title;
@@ -305,12 +313,23 @@ function viewNews(counter, displayBox, query, tokens){
 	           }).then(resp => resp.json()).then(result => console.log(result)).catch(err => console.log(err));
 
 	           }
+
+
+		  // If delete button is clicked, delete the post
+	        deleteButton.addEventListener('click', event => {
+                const element = event.target;
+                console.log(element);
+                if (element.id === 'btn-danger') {
+             			element.parentElement.parentElement.parentElement.remove()
+                }
+            });
 	           // adding new element to DOM
 	           innerDiv.appendChild(headerTag);
 	           innerDiv.appendChild(contentTag);
 	           innerDiv.appendChild(firstLinkTag);
 	           innerDiv.appendChild(secondLinkTag);
-	           innerDiv.appendChild(contentBtn);
+	           deleteButton.appendChild(contentBtn);
+	           innerDiv.appendChild(deleteButton);
 	           innerDiv.appendChild(contentModal);
 	           outerDiv.appendChild(imageTag);
 	           outerDiv.appendChild(innerDiv);
@@ -425,6 +444,7 @@ function getCurrentUser(parentEle,childEle) {
 	    if (currentUsername !== 404){
 	            	parentEle.appendChild(childEle);
 	           	}
+	       return currentUsername;
 
 	})
 	return
