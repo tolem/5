@@ -31,7 +31,7 @@ The web app is distintive as it supports user registration and storing of data. 
 
 
 ### How to run the web application
-* Head over to [NewsAPI] (https://newsapi.org/), an API key is needed to query for news. Not to worry the developer plan is available for testing!
+* Head over to [NewsAPI](https://newsapi.org/), an API key is needed to query for news. Not to worry the developer plan is available for testing!
 
 * from the root folder create and activate a virtualenv like this (instructions may differ on Windows):
 
